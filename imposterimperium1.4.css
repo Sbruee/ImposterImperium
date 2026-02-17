@@ -1,0 +1,336 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #123846, #071a20 70%);
+  color: white;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+}
+
+.container {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 26px 22px;
+  text-align: center;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+  position: relative;
+}
+
+/* Wichtig: damit Overlay sicher verschwindet */
+.hidden { display: none !important; }
+
+.logo {
+  width: 260px;
+  max-width: 90%;
+  margin: 0 auto 18px;
+  display: block;
+}
+
+h2 { margin: 12px 0 14px; }
+
+.category-buttons {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.version{
+  margin-top: 16px;
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  margin: 8px auto;
+  display: block;
+}
+
+#nameInputs input { width: 90%; }
+
+button {
+  width: 90%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 18px;
+  margin: 10px auto 0;
+  display: block;
+
+  background: linear-gradient(135deg, #4fc3f7, #24a8df);
+  color: #06141a;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+  transition: transform 0.15s ease;
+}
+
+button:hover { transform: scale(1.03); }
+
+button.danger {
+  background: linear-gradient(135deg, #ff3b3b, #d81f1f);
+  color: #fff;
+}
+
+/* Kategorie-Button ausgewählt */
+.cat-btn.selected {
+  outline: 3px solid rgba(79,195,247,0.95);
+  box-shadow: 0 0 18px rgba(79,195,247,0.45);
+  transform: scale(1.02);
+}
+
+/* Text: ausgewählte Kategorien */
+.selected-info{
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Grüner Bestätigen-Button */
+.confirm-btn{
+  margin-top: 10px;
+  background: linear-gradient(135deg, #37d67a, #13a85a);
+  color: #06141a;
+}
+
+/* Disabled sichtbar machen */
+.confirm-btn:disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.35);
+  transform: none;
+}
+
+
+/* Info "i" */
+.info-btn{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  background: rgba(255,255,255,0.10);
+  color: #eaf7ff;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.info-btn:hover { transform: scale(1.06); }
+
+/* News Button (oben links) */
+.news-btn{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  background: rgba(255,255,255,0.10);
+  color: #eaf7ff;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.news-btn:hover { transform: scale(1.06); }
+
+
+/* Rollenfarben */
+.imposter {
+  color: #ff3b3b;
+  text-shadow: 0 0 12px rgba(255,59,59,0.85);
+  font-weight: 900;
+}
+.crewmate {
+  color: #4fc3f7;
+  text-shadow: 0 0 12px rgba(79,195,247,0.85);
+  font-weight: 900;
+}
+
+/* Wort/Tipp größer & besser sichtbar */
+#wordText{
+  font-size: 28px;
+  font-weight: 900;
+  margin-top: 12px;
+  line-height: 1.2;
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 14px 12px;
+}
+
+@media (max-width: 420px){
+  #wordText{ font-size: 24px; }
+}
+#roleText{
+  font-size: 30px;
+  font-weight: 900;
+  margin: 10px 0 6px;
+}
+
+
+/* Overlay */
+.overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(40,40,40,0.65);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.overlay-card{
+  width: 100%;
+  max-width: 720px;
+  max-height: 85vh;
+  overflow: auto;
+
+  background: rgba(15, 25, 30, 0.92);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.70);
+  padding: 18px 18px 14px;
+}
+
+.overlay-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.overlay-header h2{
+  margin: 0;
+  font-size: 20px;
+  text-align: left;
+}
+
+.overlay-close{
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px;
+  border-radius: 12px;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid;
+  place-items: center;
+
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: none;
+}
+
+.overlay-content{
+  text-align: left;
+  line-height: 1.45;
+  font-size: 15px;
+}
+
+.overlay-content h3{
+  margin: 14px 0 6px;
+  color: #4fc3f7;
+}
+
+.overlay-content h4{
+  margin: 10px 0 6px;
+  color: #eaf7ff;
+}
+
+.overlay-content p, .overlay-content li{
+  color: rgba(255,255,255,0.92);
+}
+
+.overlay-content ol, .overlay-content ul{
+  margin-top: 6px;
+}
+
+/* Diskussionsstarter – HYPE */
+#starterText{
+  margin-top: 12px;
+  font-size: 26px;
+  font-weight: 900;
+  text-align: center;
+
+  color: #37d67a;
+  text-shadow:
+    0 0 12px rgba(55,214,122,0.9),
+    0 0 26px rgba(55,214,122,0.6);
+
+  animation: starterPop 0.6s ease-out,
+             starterPulse 1.2s ease-in-out infinite;
+}
+
+/* Einblenden */
+@keyframes starterPop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Pulsieren */
+@keyframes starterPulse {
+  0%   { text-shadow: 0 0 10px rgba(55,214,122,0.7); }
+  50%  { text-shadow: 0 0 28px rgba(55,214,122,1); }
+  100% { text-shadow: 0 0 10px rgba(55,214,122,0.7); }
+}
+
+/* Mobile etwas kleiner */
+@media (max-width: 420px){
+  #starterText{ font-size: 22px; }
+}
+
+
+.hint{ font-weight: 900; }
+
+.overlay-footer{
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.overlay-footer button{
+  width: min(320px, 90%);
+}
+
+/* Mobile */
+@media (max-width: 420px) {
+  button { font-size: 16px; }
+  .logo { width: 230px; }
+  .overlay-header h2 { font-size: 18px; }
+}
