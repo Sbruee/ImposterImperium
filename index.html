@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Imposter Imperium</title>
+  <link rel="stylesheet" href="imposterimperium1.7.css" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ABCD1234EF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WHXNSXEX1S');
+  </script>
+</head>
+
+<body>
+
+  <!-- INFO OVERLAY -->
+  <div id="infoOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="infoTitle" onclick="overlayClickClose(event)">
+    <div class="overlay-card">
+      <div class="overlay-header">
+        <h2 id="infoTitle">📘 Spielanleitung – Imposter Imperium</h2>
+        <button class="overlay-close" type="button" onclick="toggleInfo()" aria-label="Anleitung schließen">✕</button>
+      </div>
+
+      <div class="overlay-content">
+  <h3>🎭 Ziel des Spiels</h3>
+  <p>
+    In <strong>Imposter Imperium</strong> versuchen die <strong>Crewmates</strong>, die
+    <strong>versteckten Rollen</strong> zu entlarven.
+    Je nach Spielmodus gibt es <strong>Imposter</strong> und/oder einen <strong>Spion</strong>,
+    die unterschiedliche Informationen erhalten und bluffen müssen.
+  </p>
+
+  <h3>🧩 Spielvorbereitung</h3>
+  <ol>
+    <li>Wähle bis zu <strong>drei Kategorien</strong> (z. B. Fußball, Allgemein, Filme/Serien, Supercell Games).</li>
+    <li>Lege fest, <strong>wie viele Spieler</strong> mitmachen.</li>
+    <li>Gib <strong>allen Spielern einen Namen</strong>.</li>
+    <li>Öffne die <strong>Runden-Einstellungen</strong> und wähle den gewünschten Spielmodus.</li>
+    <li>Starte die Runde.</li>
+  </ol>
+
+  <h3>⚙️ Runden-Einstellungen (ab 5 Spielern)</h3>
+  <ul>
+    <li><strong>2 Imposter</strong> – klassischer Modus mit zwei Bluffern.</li>
+    <li><strong>1 Imposter + 1 Spion</strong> – mehr Strategie und Verwirrung.</li>
+    <li><strong>Nur Imposter</strong> – Spion deaktiviert.</li>
+  </ul>
+  <p>
+    <em>Der Spion ist bei der Kategorie <strong>Fime/Serien</strong> nicht verfügbar!</em>
+  </p>
+
+  <h3>🔀 Rollenverteilung</h3>
+  <ul>
+    <li>Jeder Spieler kommt <strong>nacheinander</strong> an die Reihe.</li>
+    <li>Nur der aktuelle Spieler sieht seinen Bildschirm.</li>
+    <li>Die Rolle wird erst sichtbar, wenn auf <strong>„Wort anzeigen“</strong> gedrückt wird.</li>
+  </ul>
+
+  <h4>👥 Rollen</h4>
+  <p>
+    <span class="hint crewmate">🔵 Crewmate</span>:
+    Kennt das <strong>geheime Wort</strong> und beschreibt es, ohne es direkt zu nennen.
+  </p>
+
+  <p>
+    <span class="hint imposter">🔴 Imposter</span>:
+    Kennt das Wort <strong>nicht</strong>.
+    Je nach Modus bekommt ein Imposter einen <strong>Tipp</strong>, der andere gar keine Hilfe.
+  </p>
+
+  <p>
+    <span class="hint spy">🟣 Spion</span>:
+    Ist eigentlich ein Crewmate, bekommt aber ein <strong>ähnliches, falsches Wort</strong>.
+    Der Spion weiß <strong>nicht</strong>, dass die anderen ein anderes Wort haben.
+  </p>
+
+  <h3>🔁 Spielablauf</h3>
+  <ol>
+    <li>Alle Spieler sehen ihre Rolle.</li>
+    <li>Danach beginnt die <strong>Diskussionsphase</strong>.</li>
+    <li>Ein <strong>zufälliger Spieler</strong> wird als Startspieler ausgewählt.</li>
+    <li>Die Spieler diskutieren, stellen Fragen und äußern Verdächtigungen.</li>
+    <li>Ziel: <strong>Imposter und ggf. den Spion entlarven</strong>.</li>
+  </ol>
+
+  <h3>🔄 Nach der Runde</h3>
+  <ul>
+    <li><strong>Neues Spiel (gleiche Namen)</strong> → neues Wort, neue Rollen, neue Reihenfolge.</li>
+    <li><strong>Spiel beenden</strong> → komplett zurück zur Startseite.</li>
+  </ul>
+
+  <h3>🧠 Tipps</h3>
+  <ul>
+    <li>Sprich nicht zu genau, sonst verrätst du das Wort.</li>
+    <li>Sprich nicht zu allgemein, sonst wirkst du verdächtig.</li>
+    <li>Als Imposter oder Spion: gut zuhören, Aussagen aufgreifen, clever nachfragen.</li>
+  </ul>
+</div>
+
+
+      <div class="overlay-footer">
+        <button type="button" onclick="toggleInfo()">Verstanden ✅</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEWS OVERLAY -->
+  <div id="newsOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="newsTitle" onclick="overlayClickCloseNews(event)">
+    <div class="overlay-card">
+      <div class="overlay-header">
+        <h2 id="newsTitle">📰 Newsfeed – Imposter Imperium</h2>
+        <button class="overlay-close" type="button" onclick="toggleNews()" aria-label="News schließen">✕</button>
+      </div>
+
+      <div class="overlay-content">
+        <h3>📣 Ankündigungen</h3>
+        <ul>
+          <li><strong>Version 1.8</strong> Bugfixes & Designanpassungen</li>
+          <li><strong>Version 1.8</strong> Neue Wörter: Kategorie Allgemein</li>
+        </ul>
+
+        <h3>🛠️ Updates / Changelog</h3>
+        <ul>
+          <li><strong>1.7</strong> – Bugfixes & Designanpassungen für neue Aufdecken Funktion</li>
+          <li><strong>1.6</strong> – neue Funktion: Imposter/Spion aufdecken am Ende des Spiels</li>
+          <li><strong>1.5</strong> – neue Rolle Spion & erweiterte Runden-Einstellungen</li>
+          <li><strong>1.4</strong> – 50+ neue Wörter Supercell Games Kategorie & Verbesserung der Tippwörter für Kategorie Filme/Serien</li>
+          <li><strong>1.3</strong> – Supercell Games Kategorie & Designanpassungen & Diskussionsstarter & Newsfeed & Bugfixes</li>
+          <li><strong>1.2</strong> – Filme/Serien Kategorie & Multi-Kategorie Auswahl & 50+ neue Wörter Fußball</li>
+          <li><strong>1.1</strong> – Anleitung (Info-Overlay) & Bugfixes</li>
+          <li><strong>1.0</strong> – Game Release</li>
+        </ul>
+
+        <h3>💡 Hinweis</h3>
+        <p>Es werden vorraussichtlich noch weitere neue Funktionen für die 1.8 angekündigt!</p>
+      </div>
+
+      <div class="overlay-footer">
+        <button type="button" onclick="toggleNews()">Schließen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVEAL ANIMATION OVERLAY (1.6 brutal) -->
+<div id="revealAnimOverlay" class="reveal-overlay hidden" aria-hidden="true">
+  <div class="reveal-flash" id="revealFlash"></div>
+
+  <div class="reveal-stage" id="revealStage">
+    <img id="knifeAnim" src="imposterknife.png" alt="" class="knife-anim" />
+
+    <div id="revealTitleBlock" class="reveal-title hidden">
+      <div id="revealTitleImposter" class="reveal-title-line imp">IMPOSTER</div>
+      <div id="revealTitleSpy" class="reveal-title-line spy hidden">SPION</div>
+    </div>
+
+    <div id="revealNames" class="reveal-names hidden"></div>
+
+    <button id="revealContinueBtn" class="reveal-continue hidden" type="button" onclick="closeRevealAnim()">
+      Weiter ▶
+    </button>
+  </div>
+</div>
+
+  <!-- KATEGORIE -->
+  <div class="container" id="categoryScreen">
+    <button class="news-btn" type="button" onclick="toggleNews()" aria-label="News & Updates">📰</button>
+    <button class="info-btn" type="button" onclick="toggleInfo()" aria-label="Infos zum Spiel">i</button>
+
+    <img src="imposterimperiumlogo.png" alt="Imposter Imperium Logo" class="logo" />
+
+    <h2>Kategorie auswählen</h2>
+
+    <div class="category-buttons">
+      <button type="button" class="cat-btn" onclick="toggleCategory('football', this)">⚽ Fußball</button>
+      <button type="button" class="cat-btn" onclick="toggleCategory('general', this)">♾ Allgemein</button>
+      <button type="button" class="cat-btn" onclick="toggleCategory('movies', this)">🎬 Filme/Serien</button>
+      <button type="button" class="cat-btn" onclick="toggleCategory('supercell', this)">🎮 Supercell Games</button>
+    </div>
+
+    <p id="selectedInfo" class="selected-info">Ausgewählt: –</p>
+
+    <button id="confirmCategoriesBtn" type="button" class="confirm-btn" onclick="confirmCategories()" disabled>
+      ✅ Bestätigen
+    </button>
+
+    <div class="version">
+      Version 1.7<br><br>
+      Diese Version befindet sich in einer Testphase. Es könnten vereinzelt kleinere Fehler auftreten!
+    </div>
+  </div>
+
+  <!-- SETUP (Namen) -->
+  <div class="container hidden" id="setupScreen">
+    <button class="news-btn" type="button" onclick="toggleNews()" aria-label="News & Updates">📰</button>
+    <button class="info-btn" type="button" onclick="toggleInfo()" aria-label="Infos zum Spiel">i</button>
+
+    <img src="imposterimperiumlogo.png" alt="Imposter Imperium Logo" class="logo" />
+
+    <h2>Spiel vorbereiten</h2>
+
+    <input type="number" id="playerCount" placeholder="Spieleranzahl" min="3" max="20" />
+    <div id="nameInputs"></div>
+
+    <button type="button" onclick="createNameInputs()">Namen eingeben</button>
+
+    <!-- NEU: Statt "Runde starten" -->
+    <button type="button" onclick="openRoundSettings()">Runden-Einstellungen</button>
+
+    <button type="button" class="danger" onclick="endGame()">Zurück</button>
+  </div>
+
+  <!-- NEU: RUNDEN-EINSTELLUNGEN -->
+  <div class="container hidden" id="roundSettingsScreen">
+    <button class="news-btn" type="button" onclick="toggleNews()" aria-label="News & Updates">📰</button>
+    <button class="info-btn" type="button" onclick="toggleInfo()" aria-label="Infos zum Spiel">i</button>
+
+    <img src="imposterimperiumlogo.png" alt="Imposter Imperium Logo" class="logo" />
+
+    <h2>⚙️ Runden-Einstellungen</h2>
+    <p id="roundSettingsHint" class="selected-info">Wähle deinen Spielmodus.</p>
+
+    <!-- Modus-Auswahl -->
+    <div class="category-buttons">
+      <button type="button" class="cat-btn" id="modeTwoImpostersBtn" onclick="setRoundMode('two_imposters', this)">
+        🔴 2 Imposter
+      </button>
+
+      <button type="button" class="cat-btn" id="modeImposterSpyBtn" onclick="setRoundMode('imposter_spy', this)">
+        🔴🟣 1 Imposter + 1 Spion
+      </button>
+
+      <button type="button" class="cat-btn" id="modeOneImposterBtn" onclick="setRoundMode('one_imposter', this)">
+        🔴 Nur 1 Imposter
+      </button>
+    </div>
+
+    <p id="roundModeInfo" class="selected-info">Ausgewählt: –</p>
+
+    <!-- Runde starten ist jetzt hier -->
+    <button type="button" class="confirm-btn" id="startRoundBtn" onclick="startRound()">
+      ▶️ Runde starten
+    </button>
+
+    <button type="button" class="danger" onclick="backToSetup()">Zurück</button>
+  </div>
+
+  <!-- GAME -->
+  <div class="container hidden" id="gameScreen">
+    <img src="imposterimperiumlogo.png" alt="Imposter Imperium Logo" class="logo" />
+
+    <h2 id="playerName"></h2>
+    <h2 id="roleText"></h2>
+    <p id="wordText">Drücke auf „Wort anzeigen“</p>
+
+    <button type="button" id="revealButton" onclick="revealWord()">Wort anzeigen</button>
+    <button type="button" id="nextButton" class="hidden" onclick="nextPlayer()">Nächster Spieler</button>
+  </div>
+
+  <!-- FINAL -->
+<div class="container hidden" id="finalScreen">
+  <img src="imposterimperiumlogo.png" alt="Imposter Imperium Logo" class="logo" />
+
+  <h2>🗣️ Diskussionsphase gestartet!</h2>
+  <p id="starterText"></p>
+
+  <!-- NEU: Aufdecken -->
+  <button type="button" id="revealRolesBtn" onclick="revealRoles()">
+    🔍 Imposter/Spion aufdecken
+  </button>
+
+  <!-- NEU: Ergebnis-Liste -->
+  <div id="revealList" class="hidden"></div>
+
+  <!-- Buttons erst NACH Aufdeckung -->
+  <div id="afterRevealActions" class="hidden">
+    <button type="button" onclick="restartGame()">Neues Spiel (gleiche Namen)</button>
+    <button type="button" class="danger" onclick="endGame()">Spiel beenden</button>
+  </div>
+</div>
+
+  <script src="imposterimperium1.7.js"></script>
+</body>
+</html>
