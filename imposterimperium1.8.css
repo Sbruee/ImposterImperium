@@ -1,0 +1,531 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #123846, #071a20 70%);
+  color: white;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+}
+
+.container {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  padding: 26px 22px;
+  text-align: center;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+  position: relative;
+}
+
+/* Wichtig: damit Overlay sicher verschwindet */
+.hidden { display: none !important; }
+
+.logo {
+  width: 260px;
+  max-width: 90%;
+  margin: 0 auto 18px;
+  display: block;
+}
+
+h2 { margin: 12px 0 14px; }
+
+.category-buttons {
+  display: grid;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.version{
+  margin-top: 16px;
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+input {
+  width: 90%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  margin: 8px auto;
+  display: block;
+}
+
+#nameInputs input { width: 90%; }
+
+button {
+  width: 90%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 18px;
+  margin: 10px auto 0;
+  display: block;
+
+  background: linear-gradient(135deg, #4fc3f7, #24a8df);
+  color: #06141a;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.35);
+  transition: transform 0.15s ease;
+}
+
+button:hover { transform: scale(1.03); }
+
+button.danger {
+  background: linear-gradient(135deg, #ff3b3b, #d81f1f);
+  color: #fff;
+}
+
+/* Kategorie-Button ausgewählt */
+.cat-btn.selected {
+  outline: 3px solid rgba(79,195,247,0.95);
+  box-shadow: 0 0 18px rgba(79,195,247,0.45);
+  transform: scale(1.02);
+}
+
+/* Text: ausgewählte Kategorien */
+.selected-info{
+  margin-top: 14px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Grüner Bestätigen-Button */
+.confirm-btn{
+  margin-top: 10px;
+  background: linear-gradient(135deg, #37d67a, #13a85a);
+  color: #06141a;
+}
+
+/* Disabled sichtbar machen */
+.confirm-btn:disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.35);
+  transform: none;
+}
+
+
+/* Info "i" */
+.info-btn{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  background: rgba(255,255,255,0.10);
+  color: #eaf7ff;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.info-btn:hover { transform: scale(1.06); }
+
+/* News Button (oben links) */
+.news-btn{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  place-items: center;
+
+  font-size: 18px;
+  font-weight: 900;
+
+  background: rgba(255,255,255,0.10);
+  color: #eaf7ff;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.news-btn:hover { transform: scale(1.06); }
+
+
+/* Rollenfarben */
+.imposter {
+  color: #ff3b3b;
+  text-shadow: 0 0 12px rgba(255,59,59,0.85);
+  font-weight: 900;
+}
+.crewmate {
+  color: #4fc3f7;
+  text-shadow: 0 0 12px rgba(79,195,247,0.85);
+  font-weight: 900;
+}
+/* Spion (NEU für 1.5) */
+.spy{
+  color: #b86bff;
+  text-shadow: 0 0 12px rgba(184,107,255,0.9);
+  font-weight: 900;
+}
+
+/* Runden-Einstellungen: deaktivierte Buttons sichtbar machen */
+#roundSettingsScreen button:disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: grayscale(0.35);
+  transform: none;
+}
+
+
+/* Wort/Tipp größer & besser sichtbar */
+#wordText{
+  font-size: 28px;
+  font-weight: 900;
+  margin-top: 12px;
+  line-height: 1.2;
+
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 14px 12px;
+}
+
+@media (max-width: 420px){
+  #wordText{ font-size: 24px; }
+}
+#roleText{
+  font-size: 30px;
+  font-weight: 900;
+  margin: 10px 0 6px;
+}
+
+
+/* Overlay */
+.overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(40,40,40,0.65);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+}
+
+.overlay-card{
+  width: 100%;
+  max-width: 720px;
+  max-height: 85vh;
+  overflow: auto;
+
+  background: rgba(15, 25, 30, 0.92);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.70);
+  padding: 18px 18px 14px;
+}
+
+.overlay-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.overlay-header h2{
+  margin: 0;
+  font-size: 20px;
+  text-align: left;
+}
+
+.overlay-close{
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px;
+  border-radius: 12px;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid;
+  place-items: center;
+
+  background: rgba(255,255,255,0.10);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: none;
+}
+
+.overlay-content{
+  text-align: left;
+  line-height: 1.45;
+  font-size: 15px;
+}
+
+.overlay-content h3{
+  margin: 14px 0 6px;
+  color: #4fc3f7;
+}
+
+.overlay-content h4{
+  margin: 10px 0 6px;
+  color: #eaf7ff;
+}
+
+.overlay-content p, .overlay-content li{
+  color: rgba(255,255,255,0.92);
+}
+
+.overlay-content ol, .overlay-content ul{
+  margin-top: 6px;
+}
+
+/* Diskussionsstarter – HYPE */
+#starterText{
+  margin-top: 12px;
+  font-size: 26px;
+  font-weight: 900;
+  text-align: center;
+
+  color: #37d67a;
+  text-shadow:
+    0 0 12px rgba(55,214,122,0.9),
+    0 0 26px rgba(55,214,122,0.6);
+
+  animation: starterPop 0.6s ease-out,
+             starterPulse 1.2s ease-in-out infinite;
+}
+
+/* Aufdeck-Liste */
+#revealList{
+  margin-top: 14px;
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-align: left;
+}
+
+#revealList .line{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 6px;
+  font-weight: 900;
+  font-size: 18px;
+}
+
+#revealList .tag{
+  font-size: 13px;
+  font-weight: 900;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.name-imposter{ color: #ff3b3b; text-shadow: 0 0 10px rgba(255,59,59,0.6); }
+.name-spy{ color: #b86bff; text-shadow: 0 0 10px rgba(184,107,255,0.6); }
+
+/* Einblenden */
+@keyframes starterPop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Pulsieren */
+@keyframes starterPulse {
+  0%   { text-shadow: 0 0 10px rgba(55,214,122,0.7); }
+  50%  { text-shadow: 0 0 28px rgba(55,214,122,1); }
+  100% { text-shadow: 0 0 10px rgba(55,214,122,0.7); }
+}
+
+/* Mobile etwas kleiner */
+@media (max-width: 420px){
+  #starterText{ font-size: 22px; }
+}
+
+
+.hint{ font-weight: 900; }
+
+.overlay-footer{
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.overlay-footer button{
+  width: min(320px, 90%);
+}
+
+/* Mobile */
+@media (max-width: 420px) {
+  button { font-size: 16px; }
+  .logo { width: 230px; }
+  .overlay-header h2 { font-size: 18px; }
+}
+
+/* =============================
+   BRUTAL REVEAL ANIMATION (1.6)
+   ============================= */
+
+.reveal-overlay{
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.72);
+  padding: 18px;
+}
+
+.reveal-stage{
+  width: min(720px, 92vw);
+  background: rgba(10, 15, 18, 0.88);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  box-shadow: 0 30px 120px rgba(0,0,0,0.85);
+  padding: 26px 18px 18px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* roter Flash beim “Impact” */
+.reveal-flash{
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 40, 40, 0.0);
+  pointer-events: none;
+}
+.reveal-flash.flash{
+  animation: redFlash 0.35s ease-out;
+}
+@keyframes redFlash{
+  0% { background: rgba(255,40,40,0.0); }
+  35%{ background: rgba(255,40,40,0.45); }
+  100%{ background: rgba(255,40,40,0.0); }
+}
+
+/* Messer-Animation */
+.knife-anim{
+  width: min(340px, 70vw);
+  max-width: 340px;
+  filter: drop-shadow(0 18px 32px rgba(0,0,0,0.75));
+  transform: translate(-140vw, -40vh) rotate(-140deg) scale(1.05);
+  opacity: 0;
+}
+
+.knife-anim.flyin{
+  opacity: 1;
+  animation: knifeFlyIn 0.65s cubic-bezier(.14,.8,.2,1.05) forwards;
+}
+
+.knife-anim.slash{
+  animation: knifeSlash 0.55s cubic-bezier(.2,.9,.2,1) forwards;
+}
+
+/* reinfliegen */
+@keyframes knifeFlyIn{
+  0%   { transform: translate(-140vw, -40vh) rotate(-140deg) scale(1.1); }
+  100% { transform: translate(0, 0) rotate(-12deg) scale(1); }
+}
+
+/* slash + small bounce */
+@keyframes knifeSlash{
+  0%   { transform: translate(0, 0) rotate(-12deg) scale(1); }
+  35%  { transform: translate(22px, 14px) rotate(22deg) scale(1.12); }
+  70%  { transform: translate(-10px, -6px) rotate(-18deg) scale(1.03); }
+  100% { transform: translate(0, 0) rotate(-8deg) scale(1); }
+}
+
+/* Screen shake auf reveal-stage */
+.reveal-stage.shake{
+  animation: shake 0.35s ease-in-out;
+}
+@keyframes shake{
+  0%{ transform: translate(0,0) rotate(0deg); }
+  15%{ transform: translate(-7px, 4px) rotate(-0.8deg); }
+  30%{ transform: translate(8px, -5px) rotate(0.9deg); }
+  45%{ transform: translate(-6px, -3px) rotate(-0.6deg); }
+  60%{ transform: translate(6px, 4px) rotate(0.6deg); }
+  100%{ transform: translate(0,0) rotate(0deg); }
+}
+
+/* Titel “IMPOSTER / SPION” */
+.reveal-title{
+  margin-top: 12px;
+}
+.reveal-title-line{
+  font-size: clamp(26px, 5vw, 44px);
+  font-weight: 1000;
+  letter-spacing: 2px;
+  margin: 4px 0;
+  transform: scale(0.7);
+  opacity: 0;
+}
+.reveal-title.show .reveal-title-line{
+  animation: popIn 0.45s ease-out forwards;
+}
+@keyframes popIn{
+  0%{ transform: scale(0.65); opacity: 0; }
+  100%{ transform: scale(1); opacity: 1; }
+}
+
+.reveal-title-line.imp{
+  color: #ff3b3b;
+  text-shadow: 0 0 18px rgba(255,59,59,0.75);
+}
+.reveal-title-line.spy{
+  color: #b86bff;
+  text-shadow: 0 0 18px rgba(184,107,255,0.75);
+}
+
+/* Namen */
+.reveal-names{
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+.reveal-names .name{
+  font-size: clamp(18px, 4.2vw, 26px);
+  font-weight: 1000;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  animation: nameIn 0.35s ease-out forwards;
+}
+@keyframes nameIn{
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.reveal-names .imposter{ color:#ff3b3b; text-shadow:0 0 12px rgba(255,59,59,0.55); }
+.reveal-names .spy{ color:#b86bff; text-shadow:0 0 12px rgba(184,107,255,0.55); }
+
+/* Weiter-Button */
+.reveal-continue{
+  width: min(360px, 90%);
+  margin: 18px auto 0;
+  background: linear-gradient(135deg, #37d67a, #13a85a);
+  color: #06141a;
+  font-weight: 1000;
+}
